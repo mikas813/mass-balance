@@ -27,7 +27,6 @@ def login(self, username, password, homeframe, loginframe):
 
                 try:
                     if bcrypt.checkpw(Pasword.encode(), hashed):
-                        m_box.showinfo('Alert', 'Login success')
                         homeframe.pack(fill='both', expand=1)
                         loginframe.pack_forget()
                     else:
