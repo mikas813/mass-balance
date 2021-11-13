@@ -7,7 +7,6 @@ from classes.RegisterFrame import RegisterFrame
 
 from classes.MainPageFrame import MainPageFrame
 
-
 class App(tk.Tk):
 
     def __init__(self, *args, **kwargs):

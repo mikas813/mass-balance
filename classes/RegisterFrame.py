@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox as m_box
 import bcrypt
+import mysql.connector
 
 from classes.PlaceholderEntry import PlaceholderEntry
 
@@ -8,37 +9,43 @@ from classes.PlaceholderEntry import PlaceholderEntry
 class RegisterFrame(tk.Frame):
 
     def register(self, username, pass1, pass2):
-        db = open('database.txt', 'r')
+        database = mysql.connector.connect(host='localhost', user='root', passwd='', database='MassAndBalance')
+        mycursor = database.cursor()
+
         Username = username.get()
-        Pasword = pass1.get()
-        Pasword1 = pass2.get()
-        d = []
-        f = []
-        for i in db:
-            a, b = i.split(',')
-            b = b.strip()
-            d.append(a)
-            f.append(b)
+        Password = pass1.get()
+        Password1 = pass2.get()
+
+        sql = "SELECT username FROM Users WHERE username = %s"
+        val = (Username,)
+
+        mycursor.execute(sql, val)
+        checkUsername = mycursor.fetchall()
 
         if not len(Username):
             m_box.showerror('Error', 'Please enter a username')
             return False
 
-        if Pasword != Pasword1:
+        if Password != Password1:
             m_box.showerror('title', 'Passwords don\'t match!')
 
         else:
-            if len(Pasword) <= 6:
+            if len(Password) <= 6:
                 m_box.showerror('Error', 'Password too short!')
-            elif Username in d:
+            elif  checkUsername:
                 m_box.showerror('Alert', 'User exists!')
             else:
-                if Pasword == Pasword1:
-                    Pasword = Pasword.encode('utf-8')
-                    Pasword = bcrypt.hashpw(Pasword, bcrypt.gensalt())
+                if Password == Password1:
+                    Password = Password.encode('utf-8')
+                    Password = bcrypt.hashpw(Password, bcrypt.gensalt())
+                    slicedPassword = str(Password)[:-1]
+                    slicedPassword = slicedPassword[3:]
 
-                db = open('database.txt', 'a')
-                db.write(Username + ", " + str(Pasword) + "\n")
+                    sql = "INSERT INTO Users (username, password) VALUES (%s, %s)"
+                    val = (Username, slicedPassword)
+                    mycursor.execute(sql, val)
+                    database.commit()
+
                 self.controller.show_frame("LoginFrame")
                 m_box.showinfo('Success', 'Success')
 

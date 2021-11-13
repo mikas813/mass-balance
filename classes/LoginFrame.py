@@ -8,8 +8,7 @@ from classes.PlaceholderEntry import PlaceholderEntry
 class LoginFrame(tk.Frame):
 
     def login(self, username, password, m_box=None):
-        print(1)
-        db = open('database.txt', 'r')
+
         Username = username.get()
         Pasword = password.get()
 
