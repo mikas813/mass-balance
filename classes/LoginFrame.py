@@ -1,44 +1,39 @@
 import tkinter as tk
-
+from tkinter import messagebox as m_box
 import bcrypt
-
 from classes.PlaceholderEntry import PlaceholderEntry
+import mysql.connector
 
 
 class LoginFrame(tk.Frame):
 
-    def login(self, username, password, m_box=None):
+    def login(self, username, password):
+        database = mysql.connector.connect(host='localhost', user='root', passwd='', database='MassAndBalance')
+        mycursor = database.cursor()
 
         Username = username.get()
-        Pasword = password.get()
+        Password = password.get()
 
-        if not len(Username or Pasword) < 1:
-            d = []
-            f = []
-            for i in db:
-                a, b = i.split(',')
-                b = b.strip()
-                d.append(a)
-                f.append(b)
-            data = dict(zip(d, f))
+        sql = "SELECT username, password FROM Users WHERE username=%s"
+        val = (Username,)
 
-            try:
-                if data[Username]:
-                    hashed = data[Username].strip('b')
+        mycursor.execute(sql, val)
+        usernameAndPassword = mycursor.fetchone()
+
+        if not len(Username or Password) < 1:
+
+                if usernameAndPassword[0] == Username:
+                    hashed = usernameAndPassword[1]
                     hashed = hashed.replace("'", "")
                     hashed = hashed.encode('utf-8')
 
-                    try:
-                        if bcrypt.checkpw(Pasword.encode(), hashed):
-                            self.controller.show_frame("MainPageFrame")
-                        else:
-                            m_box.showerror('Error', 'Wrong password')
-                    except:
+                    if bcrypt.checkpw(Password.encode(), hashed):
+                        self.controller.show_frame("MainPageFrame")
+                    else:
                         m_box.showerror('Error', 'Incorrect Password or Username')
                 else:
                     m_box.showerror('Error', 'Username doesn\'t exist')
-            except:
-                m_box.showerror('Error', 'Login error')
+
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)

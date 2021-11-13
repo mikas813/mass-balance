@@ -38,8 +38,7 @@ class RegisterFrame(tk.Frame):
                 if Password == Password1:
                     Password = Password.encode('utf-8')
                     Password = bcrypt.hashpw(Password, bcrypt.gensalt())
-                    slicedPassword = str(Password)[:-1]
-                    slicedPassword = slicedPassword[3:]
+                    slicedPassword = str(Password)[1:]
 
                     sql = "INSERT INTO Users (username, password) VALUES (%s, %s)"
                     val = (Username, slicedPassword)
