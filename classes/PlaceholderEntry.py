@@ -2,7 +2,7 @@ import tkinter as tk
 
 
 class PlaceholderEntry(tk.Entry):
-    def __init__(self, master, placeholder='', cnf={}, fg='black',
+    def __init__(self, master, placeholder='', fg='black',
                  fg_placeholder='grey50', *args, **kw):
         self.master = master
         super().__init__(master, cnf={}, bg='white', *args, **kw)

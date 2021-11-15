@@ -8,6 +8,27 @@ from classes.PlaceholderEntry import PlaceholderEntry
 
 class RegisterFrame(tk.Frame):
 
+    def __init__(self, parent, controller,master=None):
+        self.root = master
+        super().__init__(master, borderwidth=0, relief=tk.RAISED)
+
+        tk.Frame.__init__(self, parent)
+        self.controller = controller
+        label = tk.Label(self, text="Register to use Mass&Balance calculator", font=controller.title_font)
+        label.pack(side="top", fill="x", pady=10)
+
+        nameInput = PlaceholderEntry(self, placeholder="Username")
+        pass1Input = PlaceholderEntry(self, placeholder="Password")
+        pass2Input = PlaceholderEntry(self, placeholder="Confirm password")
+
+        nameInput.pack()
+        pass1Input.pack()
+        pass2Input.pack()
+
+        button = tk.Button(self, text="Register",
+                           command=lambda: self.register(nameInput, pass1Input, pass2Input))
+        button.pack()
+
     def register(self, username, pass1, pass2):
         database = mysql.connector.connect(host='localhost', user='root', passwd='', database='MassAndBalance')
         mycursor = database.cursor()
@@ -30,7 +51,7 @@ class RegisterFrame(tk.Frame):
             m_box.showerror('title', 'Passwords don\'t match!')
 
         else:
-            if len(Password) <= 6:
+            if len(Password) < 6:
                 m_box.showerror('Error', 'Password too short!')
             elif  checkUsername:
                 m_box.showerror('Alert', 'User exists!')
@@ -47,24 +68,3 @@ class RegisterFrame(tk.Frame):
 
                 self.controller.show_frame("LoginFrame")
                 m_box.showinfo('Success', 'Success')
-
-    def __init__(self, parent, controller,master=None):
-        self.root = master
-        super().__init__(master, borderwidth=0, relief=tk.RAISED)
-
-        tk.Frame.__init__(self, parent)
-        self.controller = controller
-        label = tk.Label(self, text="Register to use Mass&Balance calculator", font=controller.title_font)
-        label.pack(side="top", fill="x", pady=10)
-
-        nameInput = PlaceholderEntry(self, placeholder="Username")
-        pass1Input = PlaceholderEntry(self, placeholder="Password")
-        pass2Input = PlaceholderEntry(self, placeholder="Confirm password")
-
-        nameInput.pack()
-        pass1Input.pack()
-        pass2Input.pack()
-
-        button = tk.Button(self, text="Register",
-                           command=lambda: self.register(nameInput, pass1Input, pass2Input))
-        button.pack()
