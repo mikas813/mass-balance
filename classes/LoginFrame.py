@@ -7,34 +7,6 @@ import mysql.connector
 
 class LoginFrame(tk.Frame):
 
-    def login(self, username, password):
-        database = mysql.connector.connect(host='localhost', user='root', passwd='', database='MassAndBalance')
-        mycursor = database.cursor()
-
-        Username = username.get()
-        Password = password.get()
-
-        sql = "SELECT username, password FROM Users WHERE username=%s"
-        val = (Username,)
-
-        mycursor.execute(sql, val)
-        usernameAndPassword = mycursor.fetchone()
-
-        if not len(Username or Password) < 1:
-
-                if usernameAndPassword[0] == Username:
-                    hashed = usernameAndPassword[1]
-                    hashed = hashed.replace("'", "")
-                    hashed = hashed.encode('utf-8')
-
-                    if bcrypt.checkpw(Password.encode(), hashed):
-                        self.controller.show_frame("MainPageFrame")
-                    else:
-                        m_box.showerror('Error', 'Incorrect Password or Username')
-                else:
-                    m_box.showerror('Error', 'Username doesn\'t exist')
-
-
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
 
@@ -57,3 +29,32 @@ class LoginFrame(tk.Frame):
                             command=lambda: controller.show_frame("RegisterFrame"))
         loginButton.pack()
         registerButton.pack()
+
+    def login(self, username, password):
+        database = mysql.connector.connect(host='localhost', user='root', passwd='', database='MassAndBalance')
+        mycursor = database.cursor()
+
+        Username = username.get()
+        Password = password.get()
+
+        sql = "SELECT username, password FROM Users WHERE username=%s"
+        val = (Username,)
+
+        mycursor.execute(sql, val)
+        usernameAndPassword = mycursor.fetchone()
+
+        try:
+            hashed = usernameAndPassword[1]
+            hashed = hashed.replace("'", "")
+            hashed = hashed.encode('utf-8')
+            if bcrypt.checkpw(Password.encode(), hashed):
+                self.controller.show_frame("MainPageFrame")
+            else:
+                m_box.showerror('Error', 'Incorrect Password or Username')
+        except:
+            m_box.showerror('Error', 'Username doesn\'t exist')
+
+
+
+
+

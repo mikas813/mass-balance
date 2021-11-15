@@ -1,11 +1,9 @@
 import tkinter as tk
 from tkinter import font as tkfont
-
 from classes.LoginFrame import LoginFrame
-
 from classes.RegisterFrame import RegisterFrame
-
 from classes.MainPageFrame import MainPageFrame
+
 
 class App(tk.Tk):
 
