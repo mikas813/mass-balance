@@ -17,7 +17,7 @@ class LoginFrame(tk.Frame):
         label.pack(side="top", fill="x", pady=10)
 
         nameInput = PlaceholderEntry(self, placeholder="Username")
-        passInput = PlaceholderEntry(self, placeholder="Password")
+        passInput = PlaceholderEntry(self, placeholder="Password", show="*")
 
         nameInput.pack()
         passInput.pack()
@@ -29,6 +29,7 @@ class LoginFrame(tk.Frame):
                             command=lambda: controller.show_frame("RegisterFrame"))
         loginButton.pack()
         registerButton.pack()
+
 
     def login(self, username, password):
         database = mysql.connector.connect(host='localhost', user='root', passwd='', database='MassAndBalance')

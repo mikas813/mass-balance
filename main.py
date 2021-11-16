@@ -3,7 +3,7 @@ from tkinter import font as tkfont
 from classes.LoginFrame import LoginFrame
 from classes.RegisterFrame import RegisterFrame
 from classes.MainPageFrame import MainPageFrame
-
+from classes.AircraftFrame import AircraftFrame
 
 class App(tk.Tk):
 
@@ -21,7 +21,7 @@ class App(tk.Tk):
         container.grid_columnconfigure(0, weight=1)
 
         self.frames = {}
-        for F in (LoginFrame, RegisterFrame, MainPageFrame):
+        for F in (LoginFrame, RegisterFrame, MainPageFrame, AircraftFrame):
             page_name = F.__name__
             frame = F(parent=container, controller=self)
             self.frames[page_name] = frame
