@@ -18,8 +18,8 @@ class RegisterFrame(tk.Frame):
         label.pack(side="top", fill="x", pady=10)
 
         nameInput = PlaceholderEntry(self, placeholder="Username")
-        pass1Input = PlaceholderEntry(self, placeholder="Password")
-        pass2Input = PlaceholderEntry(self, placeholder="Confirm password")
+        pass1Input = PlaceholderEntry(self, placeholder="Password", show='*')
+        pass2Input = PlaceholderEntry(self, placeholder="Confirm password", show='*')
 
         nameInput.pack()
         pass1Input.pack()
@@ -28,6 +28,10 @@ class RegisterFrame(tk.Frame):
         button = tk.Button(self, text="Register",
                            command=lambda: self.register(nameInput, pass1Input, pass2Input))
         button.pack()
+
+        loginButton = tk.Button(self, text="Login",
+                           command=lambda: self.controller.show_frame('LoginFrame'))
+        loginButton.pack()
 
     def register(self, username, pass1, pass2):
         database = mysql.connector.connect(host='localhost', user='root', passwd='', database='MassAndBalance')
