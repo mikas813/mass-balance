@@ -11,13 +11,13 @@ class App(tk.Tk):
         tk.Tk.__init__(self, *args, **kwargs)
 
         self.title_font = tkfont.Font(family='Helvetica', size=18, weight="bold", slant="italic")
-        self.geometry('700x500')
+        self.geometry('800x500')
         self.title('Mass & Balance Calculator')
         # the container is where we'll stack a bunch of frames
         # on top of each other, then the one we want visible
         # will be raised above the others
         container = tk.Frame(self)
-        container.pack(side="top", fill="both", expand=True)
+        container.grid()
         container.grid_rowconfigure(0, weight=1)
         container.grid_columnconfigure(0, weight=1)
 
@@ -32,7 +32,7 @@ class App(tk.Tk):
             # will be the one that is visible.
             frame.grid(row=0, column=0, sticky="nsew")
 
-        self.show_frame("LoginFrame")
+        self.show_frame("MainPageFrame")
 
     def show_frame(self, page_name):
         '''Show a frame for the given page name'''
