@@ -3,6 +3,7 @@ from classes.PlaceholderEntry import PlaceholderEntry
 from tkinter import ttk
 import mysql.connector
 from tkinter import messagebox as m_box
+from utils import dbUser, dbPassword, dbHost, dbName
 
 class MainPageFrame(tk.Frame):
 
@@ -50,7 +51,7 @@ class MainPageFrame(tk.Frame):
         addAirCraftButton.grid(row=5, column=3, sticky='W')
 
         # DB Connection
-        database = mysql.connector.connect(host='localhost', user='root', passwd='', database='MassAndBalance')
+        database = mysql.connector.connect(host=dbHost, user=dbUser, passwd=dbPassword, database=dbName)
         mycursor = database.cursor()
         # Retrieve all values from table Aircraft
         mycursor.execute("SELECT Aircraft_ID FROM Aircraft")
@@ -72,7 +73,7 @@ class MainPageFrame(tk.Frame):
             #Get takeoff weight conditions
 
             # DB Connection
-            database = mysql.connector.connect(host='localhost', user='root', passwd='', database='MassAndBalance')
+            database = mysql.connector.connect(host=dbHost, user=dbUser, passwd=dbPassword, database=dbName)
             mycursor = database.cursor()
 
             # Get aircraft empty weight by aircraft name
