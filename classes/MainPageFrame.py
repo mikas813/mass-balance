@@ -47,8 +47,8 @@ class MainPageFrame(tk.Frame):
         addAirCraftButton = tk.Button(self, text="Add Aircraft",
                            command=lambda: controller.show_frame("AircraftFrame"))
         #Action buttons
-        calcButton.grid(row=4, column=3, sticky='W')
-        addAirCraftButton.grid(row=5, column=3, sticky='W')
+        calcButton.grid(row=3, column=3, sticky='W')
+        addAirCraftButton.grid(row=4, column=3, sticky='W')
 
         # DB Connection
         database = mysql.connector.connect(host=dbHost, user=dbUser, passwd=dbPassword, database=dbName)
@@ -59,7 +59,7 @@ class MainPageFrame(tk.Frame):
         database.close()
         #Combobox
         comboBox = ttk.Combobox(self, values=allAirCrafts)
-        comboBox.grid(row=3, column=3, sticky='W')
+        comboBox.grid(row=2, column=3, sticky='W')
 
         def calculate():
             if not len(pilotInput.get()) or not len(coPilotInput.get()) or not len(baggageInput.get()) \
