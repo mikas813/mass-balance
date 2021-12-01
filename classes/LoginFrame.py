@@ -14,13 +14,13 @@ class LoginFrame(tk.Frame):
 
 
         label = tk.Label(self, text="Login to Mass&Balance Calculator", font=controller.title_font)
-        label.grid(row=1, columnspan=2)
+        label.grid(row=1, columnspan=2, ipady=20, ipadx=150)
 
         nameInput = PlaceholderEntry(self, placeholder="Username")
         passInput = PlaceholderEntry(self, placeholder="Password", show="*")
 
-        nameInput.grid(row=2, columnspan=2, sticky='n')
-        passInput.grid(row=3, columnspan=2)
+        nameInput.grid(row=2, columnspan=2, padx=150)
+        passInput.grid(row=3, columnspan=2, pady=10, padx=150)
 
         loginButton = tk.Button(self, text="Login",
                             command=lambda: self.login(nameInput, passInput))
