@@ -4,6 +4,7 @@ import bcrypt
 from tkinter import ttk
 import mysql.connector
 from classes.PlaceholderEntry import PlaceholderEntry
+from utils import dbUser, dbPassword, dbHost, dbName
 
 
 class AircraftFrame(tk.Frame):
@@ -35,7 +36,7 @@ class AircraftFrame(tk.Frame):
         deleteButton.pack()
 
         # DB Connection
-        database = mysql.connector.connect(host='localhost', user='root', passwd='', database='MassAndBalance')
+        database = mysql.connector.connect(host=dbHost, user=dbUser, passwd=dbPassword, database=dbName)
         mycursor = database.cursor()
         # Retrieve all values from table Aircraft
         mycursor.execute("SELECT * FROM Aircraft")
@@ -73,7 +74,7 @@ class AircraftFrame(tk.Frame):
         self.selected = self.tree.focus()
         values = self.tree.item(self.selected, 'values')
         # DB Connection
-        database = mysql.connector.connect(host='localhost', user='root', passwd='', database='MassAndBalance')
+        database = mysql.connector.connect(host=dbHost, user=dbUser, passwd=dbPassword, database=dbName)
         mycursor = database.cursor()
         # Delete aircraft from DB
         sql = "DELETE FROM Aircraft WHERE Aircraft_ID=%s"
@@ -101,7 +102,7 @@ class AircraftFrame(tk.Frame):
             return False
 
         # DB Connection
-        database = mysql.connector.connect(host='localhost', user='root', passwd='', database='MassAndBalance')
+        database = mysql.connector.connect(host=dbHost, user=dbUser, passwd=dbPassword, database=dbName)
         mycursor = database.cursor()
         #Insert values to DB
         sql = "INSERT INTO Aircraft (Aircraft_ID, Weight, Arm) VALUES (%s, %s, %s)"

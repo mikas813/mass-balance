@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import messagebox as m_box
 import bcrypt
 import mysql.connector
-
+from utils import dbUser, dbPassword, dbHost, dbName
 from classes.PlaceholderEntry import PlaceholderEntry
 
 
@@ -34,7 +34,7 @@ class RegisterFrame(tk.Frame):
         loginButton.pack()
 
     def register(self, username, pass1, pass2):
-        database = mysql.connector.connect(host='localhost', user='root', passwd='', database='MassAndBalance')
+        database = mysql.connector.connect(host=dbHost, user=dbUser, passwd=dbPassword, database=dbName)
         mycursor = database.cursor()
 
         Username = username.get()

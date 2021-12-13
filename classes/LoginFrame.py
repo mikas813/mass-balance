@@ -3,7 +3,7 @@ from tkinter import messagebox as m_box
 import bcrypt
 from classes.PlaceholderEntry import PlaceholderEntry
 import mysql.connector
-
+from utils import dbUser, dbPassword, dbHost, dbName
 
 class LoginFrame(tk.Frame):
 
@@ -14,13 +14,13 @@ class LoginFrame(tk.Frame):
 
 
         label = tk.Label(self, text="Login to Mass&Balance Calculator", font=controller.title_font)
-        label.grid(row=1, columnspan=2)
+        label.grid(row=1, columnspan=2, ipady=20, ipadx=150)
 
         nameInput = PlaceholderEntry(self, placeholder="Username")
         passInput = PlaceholderEntry(self, placeholder="Password", show="*")
 
-        nameInput.grid(row=2, columnspan=2, sticky='n')
-        passInput.grid(row=3, columnspan=2)
+        nameInput.grid(row=2, columnspan=2, padx=150)
+        passInput.grid(row=3, columnspan=2, pady=10, padx=150)
 
         loginButton = tk.Button(self, text="Login",
                             command=lambda: self.login(nameInput, passInput))
@@ -32,7 +32,7 @@ class LoginFrame(tk.Frame):
 
 
     def login(self, username, password):
-        database = mysql.connector.connect(host='localhost', user='root', passwd='', database='MassAndBalance')
+        database = mysql.connector.connect(host=dbHost, user=dbUser, passwd=dbPassword, database=dbName)
         mycursor = database.cursor()
 
         Username = username.get()
